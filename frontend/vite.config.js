@@ -9,6 +9,7 @@ export default defineConfig({
     allowedHosts: 'all'
   },
   server: {
-    port: 5173
+    port: process.env.PORT || 5173,
+    host: true
   }
 })
