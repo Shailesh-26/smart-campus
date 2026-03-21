@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8080";
+const API_BASE = import.meta.env.VITE_API_URL;
 
 export const authFetch = async (url, options = {}) => {
   const token = localStorage.getItem("token");
@@ -19,7 +19,6 @@ export const authFetch = async (url, options = {}) => {
     throw new Error("Request failed");
   }
 
-  // If response has no body (e.g. 204 No Content on DELETE), don't parse JSON
   const contentType = res.headers.get("content-type");
   if (!contentType || !contentType.includes("application/json")) {
     return null;

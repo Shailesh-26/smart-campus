@@ -7,6 +7,8 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 @Service
+@Value("${app.frontend.url}")
+private String frontendUrl;
 public class EmailService {
 
     private final JavaMailSender mailSender;
@@ -72,7 +74,7 @@ public class EmailService {
                     <p style="margin: 8px 0 0; color: #0f172a;"><strong>To:</strong> %s</p>
                 </div>
                 <p style="color: #475569;">Please make sure to arrive on time. If your plans have changed, log in to Smart Campus to cancel your booking.</p>
-                <a href="http://localhost:5173/my-bookings"
+                <a href=\"" + frontendUrl + "/my-bookings\""
                    style="display: inline-block; margin-top: 16px; padding: 10px 20px; background: #6366f1; color: white; border-radius: 8px; text-decoration: none; font-weight: bold;">
                    View My Bookings
                 </a>
