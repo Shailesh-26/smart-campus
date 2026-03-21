@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -7,17 +8,17 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 @Service
-@Value("${app.frontend.url}")
-private String frontendUrl;
 public class EmailService {
 
     private final JavaMailSender mailSender;
+
+    @Value("${app.frontend.url:http://localhost:5173}")
+    private String frontendUrl;
 
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
 
-    // ✅ BOOKING APPROVED
     public void sendBookingApproved(String toEmail, String roomNumber,
                                      String startTime, String endTime) {
         String subject = "✅ Booking Approved — Smart Campus";
@@ -37,7 +38,6 @@ public class EmailService {
         sendHtmlEmail(toEmail, subject, body);
     }
 
-    // ✅ BOOKING REJECTED
     public void sendBookingRejected(String toEmail, String roomNumber,
                                      String startTime, String endTime) {
         String subject = "❌ Booking Rejected — Smart Campus";
@@ -57,7 +57,6 @@ public class EmailService {
         sendHtmlEmail(toEmail, subject, body);
     }
 
-    // ✅ BOOKING REMINDER — 30 mins before
     public void sendBookingReminder(String toEmail, String roomNumber,
                                      String startTime, String endTime) {
         String subject = "⏰ Reminder: Your booking starts in 30 minutes — Smart Campus";
@@ -73,18 +72,16 @@ public class EmailService {
                     <p style="margin: 8px 0 0; color: #0f172a;"><strong>From:</strong> %s</p>
                     <p style="margin: 8px 0 0; color: #0f172a;"><strong>To:</strong> %s</p>
                 </div>
-                <p style="color: #475569;">Please make sure to arrive on time. If your plans have changed, log in to Smart Campus to cancel your booking.</p>
-                <a href=\"" + frontendUrl + "/my-bookings\""
-                   style="display: inline-block; margin-top: 16px; padding: 10px 20px; background: #6366f1; color: white; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                <p style="color: #475569;">Please make sure to arrive on time.</p>
+                <a href="%s/my-bookings" style="display: inline-block; margin-top: 16px; padding: 10px 20px; background: #6366f1; color: white; border-radius: 8px; text-decoration: none; font-weight: bold;">
                    View My Bookings
                 </a>
                 <p style="color: #94a3b8; font-size: 12px; margin-top: 32px;">Smart Campus Room Booking System</p>
             </div>
-            """.formatted(roomNumber, startTime, endTime);
+            """.formatted(roomNumber, startTime, endTime, frontendUrl);
         sendHtmlEmail(toEmail, subject, body);
     }
 
-    // ✅ SHARED HTML SENDER
     private void sendHtmlEmail(String to, String subject, String htmlBody) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
