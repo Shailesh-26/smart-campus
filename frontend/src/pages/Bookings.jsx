@@ -66,14 +66,14 @@ function Bookings() {
 
   if (!user) return null;
 
-  const loadRooms = async () => { setRooms(await authFetch("/rooms")); };
+  const loadRooms = async () => { setRooms(await authFetch("/rooms") ?? []); };
   const loadBookings = async () => {
     setLoading(true);
     try {
       const data = user.role === "ADMIN"
         ? await authFetch("/bookings")
         : await authFetch("/bookings/my");
-      setBookings(data);
+      setBookings(data ?? []);
     } finally {
       setLoading(false);
     }

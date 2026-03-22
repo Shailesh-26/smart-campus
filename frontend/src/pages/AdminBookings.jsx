@@ -104,9 +104,9 @@ function AdminBookings() {
         query: debouncedQuery,
       });
       const data = await authFetch(`/bookings/paged?${params}`);
-      setBookings(data.content);
-      setTotalPages(data.totalPages);
-      setTotalItems(data.totalElements);
+      setBookings(data?.content ?? []);
+      setTotalPages(data?.totalPages ?? 0);
+      setTotalItems(data?.totalElements ?? 0);
     } catch {
       showToast("Failed to load bookings", "error");
     } finally {

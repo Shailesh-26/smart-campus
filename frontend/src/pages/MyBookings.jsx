@@ -44,7 +44,7 @@ function MyBookings() {
   const load = async () => {
     setLoading(true);
     try {
-      setBookings(await authFetch("/bookings/my"));
+      setBookings(await authFetch("/bookings/my") ?? []);
     } finally {
       setLoading(false);
     }
@@ -146,14 +146,14 @@ function MyBookings() {
             key={s}
             onClick={() => setFilter(s)}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${filter === s
-                ? "bg-brand-600 text-white"
-                : "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
+              ? "bg-brand-600 text-white"
+              : "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
               }`}
           >
             {s}
             <span className={`px-1.5 py-0.5 rounded-full text-xs font-bold ${filter === s
-                ? "bg-white text-brand-600"
-                : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400"
+              ? "bg-white text-brand-600"
+              : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400"
               }`}>
               {counts[s]}
             </span>
