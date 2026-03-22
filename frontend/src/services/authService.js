@@ -1,4 +1,4 @@
-const API_URL = `${import.meta.env.VITE_API_URL}/auth`;
+const API_URL = "https://reliable-peace-production-e711.up.railway.app/auth";
 
 export const signup = async (formData) => {
   const response = await fetch(`${API_URL}/signup`, {
