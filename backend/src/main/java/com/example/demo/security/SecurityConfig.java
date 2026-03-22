@@ -55,7 +55,7 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of(
             "http://localhost:5173",   // local Vite dev
             "http://localhost:4173",   // local Vite preview
-            frontendUrl                // Railway / production frontend URL
+            "https://smart-campus-production-534e.up.railway.app"              // Railway / production frontend URL
         ));
 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
