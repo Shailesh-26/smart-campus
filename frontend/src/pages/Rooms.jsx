@@ -29,8 +29,8 @@ function Rooms() {
         authFetch("/rooms"),
         user?.role === "ADMIN" ? authFetch("/bookings") : authFetch("/bookings/my")
       ]);
-      setRooms(roomData);
-      setBookings(bookingData);
+      setRooms(roomData ?? []);
+      setBookings(bookingData ?? []);
     } catch {
       showToast("Failed to load rooms", "error");
     } finally {

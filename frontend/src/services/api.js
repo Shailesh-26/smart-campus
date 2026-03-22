@@ -16,7 +16,7 @@ export const authFetch = async (url, options = {}) => {
     if (res.status === 401 || res.status === 403) {
       throw new Error("Unauthorized");
     }
-    throw new Error("Request failed");
+    throw new Error(`Request failed: ${res.status}`);
   }
 
   const contentType = res.headers.get("content-type");
@@ -24,5 +24,7 @@ export const authFetch = async (url, options = {}) => {
     return null;
   }
 
-  return res.json();
+  const data = await res.json();
+
+  return data ?? [];
 };

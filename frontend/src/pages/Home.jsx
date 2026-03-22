@@ -109,10 +109,10 @@ function Home() {
   const loadDashboard = async () => {
     setLoading(true);
     try {
-      const rooms = await authFetch("/rooms");
-      const myBookings = await authFetch("/bookings/my");
+      const rooms = await authFetch("/rooms") ?? [];
+      const myBookings = await authFetch("/bookings/my") ?? [];
       const allBookings = user.role === "ADMIN"
-        ? await authFetch("/bookings")
+        ? (await authFetch("/bookings") ?? [])
         : myBookings;
 
       const now = new Date();
@@ -216,8 +216,8 @@ function Home() {
           </p>
         </div>
         <span className={`text-xs font-semibold px-3 py-1.5 rounded-full border ${user?.role === "ADMIN"
-            ? "bg-brand-50 dark:bg-brand-600/10 text-brand-700 dark:text-brand-400 border-brand-200 dark:border-brand-500/30"
-            : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700"
+          ? "bg-brand-50 dark:bg-brand-600/10 text-brand-700 dark:text-brand-400 border-brand-200 dark:border-brand-500/30"
+          : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700"
           }`}>
           {user?.role}
         </span>
